@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Steam Card Info on Steamgifts
-// @namespace    http://github.com/jullebarge/SteamGifts_Cards
-// @version      1.5
+// @namespace    https://github.com/jullebarge/SteamGifts_Cards
+// @version      1.6
 // @description  Show cards available for games on Steamgifts
 // @author       Jullebarge
 // @match        http://www.steamgifts.com/*
@@ -34,7 +34,7 @@ if((window.location.href=="https://www.steamgifts.com/") || (window.location.hre
                                         link_inside.style.color="green";
                                         link_inside.className = "";
                                     }
-                                    else if (xhr.responseText.indexOf("adult_content_age_gate") > 0)
+                                    else if ((xhr.responseText.indexOf("adult_content_age_gate") > 0) || (xhr.responseText.indexOf("agecheck") > 0))
                                     {
                                         link_inside.style.color="orange";
                                     }
