@@ -9,7 +9,7 @@
 // @grant         GM_xmlhttpRequest
 // ==/UserScript==
 
-if((window.location.href=="https://www.steamgifts.com/") || (window.location.href.indexOf("steamgifts.com/giveaways/") > 0)) //I'm on Steamgifts main page
+if((window.location.href=="https://www.steamgifts.com/") || (window.location.href.indexOf("steamgifts.com/group/") || (window.location.href.indexOf("steamgifts.com/giveaways/") > 0)) //I'm on Steamgifts main page
 {
 	console.log("Steamgifts Main Page detected");
     var games = document.getElementsByTagName("h2");
