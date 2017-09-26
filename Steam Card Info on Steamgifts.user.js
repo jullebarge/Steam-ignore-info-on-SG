@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Steam Card Info on Steamgifts
 // @namespace    https://github.com/jullebarge/SteamGifts_Cards
-// @version      1.7
+// @version      1.7.1
 // @description  Show cards available for games on Steamgifts
 // @author       Jullebarge
 // @match        http://www.steamgifts.com/*
@@ -9,7 +9,7 @@
 // @grant         GM_xmlhttpRequest
 // ==/UserScript==
 
-if((window.location.href=="https://www.steamgifts.com/") || (window.location.href.indexOf("steamgifts.com/group/") || (window.location.href.indexOf("steamgifts.com/giveaways/") > 0)) //I'm on Steamgifts main page
+if((window.location.href=="https://www.steamgifts.com/") || (window.location.href.indexOf("steamgifts.com/group/")) || (window.location.href.indexOf("steamgifts.com/giveaways/") > 0)) //I'm on a Steamgifts page
 {
 	console.log("Steamgifts Main Page detected");
     var games = document.getElementsByTagName("h2");
