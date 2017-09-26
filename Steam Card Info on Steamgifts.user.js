@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Steam Card Info on Steamgifts
 // @namespace    https://github.com/jullebarge/SteamGifts_Cards
-// @version      1.6
+// @version      1.7
 // @description  Show cards available for games on Steamgifts
 // @author       Jullebarge
 // @match        http://www.steamgifts.com/*
