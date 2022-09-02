@@ -1,99 +1,48 @@
 // ==UserScript==
-// @name         Steam Card Info on Steamgifts
-// @namespace    https://github.com/jullebarge/SteamGifts_Cards
-// @version      1.7.2
-// @description  Show cards available for games on Steamgifts
-// @author       Jullebarge
+// @name         Steam ignore Info on Steamgifts
+// @version      1.2
+// @description  Show if the game is ignored on Steam
+// @author       JulLeBarge
 // @match        http://www.steamgifts.com/*
 // @match        https://www.steamgifts.com/*
 // @grant         GM_xmlhttpRequest
 // ==/UserScript==
 
-if(window.location.href.indexOf("steamgifts.com/giveaway/") > 0)
-{
-	console.log("Steamgifts Giveaway Page detected");
-    var games = document.getElementsByClassName("featured__outer-wrap featured__outer-wrap--giveaway");
-	for(var i=0;i<games.length;i++)
-	{
-		var links = games[i].getElementsByTagName("img");
-		for(var j=0;j<links.length;j++)
-		{
-			var LienTrouve = links[j];
-            var Steamlink =LienTrouve.parentElement.href;
-            console.log("Lien Steam du jeu : " + Steamlink);
-			if (Steamlink.indexOf("store.steampowered.com/app") > 0)
-			{
-				(function (link_inside) {
-					GM_xmlhttpRequest({
-						method: "GET",
-						url: Steamlink,
-						onload: function(xhr) {
-							if(xhr.responseText.indexOf("ico_cards.png") > 0)
-							{
-								link_inside.parentNode.parentNode.parentNode.style.backgroundColor="green";
-							}
-							else if ((xhr.responseText.indexOf("adult_content_age_gate") > 0) || (xhr.responseText.indexOf("agecheck") > 0))
-							{
-								link_inside.style.color="orange";
-							}
-							else
-							{
-								link_inside.parentNode.parentNode.parentNode.style.backgroundColor="red";
-							}
-						}
-					});
-				})(LienTrouve);
-			}
-		}
-	}
-	games = null;
-	links = null;
-	LienTrouve = null;
-    Steamlink = null;
-}
-else if((window.location.href=="https://www.steamgifts.com/") || (window.location.href.indexOf("steamgifts.com/group/")) || (window.location.href.indexOf("steamgifts.com/giveaways/") > 0))
+if((window.location.href=="https://www.steamgifts.com/") || (window.location.href.indexOf("steamgifts.com/group/")) || (window.location.href.indexOf("steamgifts.com/giveaways/") > 0))
 {
 	console.log("Steamgifts Main Page detected");
     var games = document.getElementsByTagName("h2");
+    console.log("Nb de jeux sur la page: " + games.length);
 	for(var i=0;i<games.length;i++)
 	{
-		var classe =games[i].getAttribute("class");
-			if(classe=="giveaway__heading")
-			{
-				var links = games[i].getElementsByTagName("a");
-				for(var j=0;j<links.length;j++)
-				{
-                    var LienTrouve = links[j];
-					if (LienTrouve.getAttribute("class")=="giveaway__icon" && LienTrouve.getAttribute("href").substring(0,9)!="/giveaway")
-                    {
-                        (function (link_inside) {
-                            GM_xmlhttpRequest({
-                                method: "GET",
-                                url: link_inside.href,
-                                onload: function(xhr) {
-                                    if(xhr.responseText.indexOf("ico_cards.png") > 0)
-                                    {
-                                        link_inside.style.color="green";
-                                        link_inside.className = "";
-                                    }
-                                    else if ((xhr.responseText.indexOf("adult_content_age_gate") > 0) || (xhr.responseText.indexOf("agecheck") > 0))
-                                    {
-                                        link_inside.style.color="orange";
-                                    }
-                                    else
-                                    {
-                                        link_inside.style.color="red";
-                                    }
-                                }
-                            });
-                        })(LienTrouve);
+        console.log(games[i].querySelector('a').innerHTML);
+        var LienTrouve = games[i].querySelectorAll('a')[1];
+        console.log(LienTrouve.href);
+        (function (link_inside) {
+            GM_xmlhttpRequest({
+                method: "GET",
+                url: link_inside.href,
+                onload: function(xhr) {
+                    //console.log(xhr.responseText);
+                    if(xhr.responseText.indexOf('<div class="btnv6_blue_hoverfade  btn_medium queue_btn_active" data-panel="{&quot;focusable&quot;:true,&quot;clickOnActivate&quot;:true}" style="" data-tooltip-text="Les titres ignorés ne vous seront pas recommandés et n\’apparaitront pas dans les espaces d\’affichage.">') > 0)
+                        //<div class="btnv6_blue_hoverfade  btn_medium queue_btn_active" data-panel="{&quot;focusable&quot;:true,&quot;clickOnActivate&quot;:true}" style="" data-tooltip-text="Les titres ignorés ne vous seront pas recommandés et n’apparaitront pas dans les espaces d’affichage.">
 
+                    {
+                        link_inside.style.color="red";
+                        //link_inside.className = "";
                     }
-				}
-			}
+                    else if ((xhr.responseText.indexOf("adult_content_age_gate") > 0) || (xhr.responseText.indexOf("agecheck") > 0) || (xhr.responseText.indexOf("package_header_container") > 0))
+                    {
+                        link_inside.style.color="orange";
+                    }
+                    else
+                    {
+                        link_inside.style.color="green";
+                    }
+                }
+            });
+        })(LienTrouve);
 	}
 	games = null;
-	classe = null;
-	links = null;
 	LienTrouve = null;
 }
