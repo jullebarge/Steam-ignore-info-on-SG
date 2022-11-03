@@ -1,6 +1,6 @@
-# SteamGifts_Cards
-Show cards available for games on Steamgifts by coloring the Steam icon: 
-- green, the game has cards
-- red, the game doesn't have cards
+# Steam ignore Info on Steamgifts
+Show if the game is ignored on Steam:
+- green, not ignored
+- red, ignored
 - yellow, the game requires age check
-
+- blue, game not found
