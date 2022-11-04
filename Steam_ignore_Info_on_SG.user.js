@@ -40,7 +40,7 @@ if((window.location.href=="https://www.steamgifts.com/") || (window.location.hre
                     }
                     else if (xhr.responseText.indexOf("<title>Bienvenue sur Steam</title>") > 0)
                     {
-                        link_inside.style.color="blue";
+                        link_inside.style.color="navy";
                     }
                     else
                     {
